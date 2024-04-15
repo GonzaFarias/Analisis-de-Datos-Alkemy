@@ -20,4 +20,4 @@ print(np.linalg.solve(a,b)) # Hayar la solucion a este sistema de ecuaciones
 x = np.array([[randint(0,10) for _ in range (3)] for _ in range(3)]) # Creacion de matriz con números random
 print(x)
 print(x[2][2])
-
+ 
