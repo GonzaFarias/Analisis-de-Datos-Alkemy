@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 from config import Config
 from abc import ABC, abstractmethod
 
@@ -72,10 +73,27 @@ df_payments_copy = clean_dataset(df_payments)
 df_orders_copy = clean_dataset(df_orders)
 df_products_copy = clean_dataset(df_products)
 
-# Obtener descripciones de cada conjunto de datos limpios
-print(df_customers_copy.describe())
-print(df_items_copy.describe())
-print(df_payments_copy.describe())
-print(df_orders_copy.describe())
-print(df_products_copy.describe())
+# Obtener información de cada conjunto de datos 
+def dataset_info(df: pd.DataFrame):
+    print(4 * '-------------------------------' + '\nDatos descriptivos:')
+    print(f'{df.info()}\n')
+    print(f'{df.describe()}\n')
+
+dataset_info(df_customers_copy)
+dataset_info(df_items_copy)
+dataset_info(df_payments_copy)
+dataset_info(df_orders_copy)
+dataset_info(df_products_copy)
+
+# Crear y visualizar boxplot de precios
+plt.boxplot(df_items_copy['price'])
+plt.xlabel('Precio')
+plt.ylabel('Valor')
+plt.title('Boxplot de precio')
+plt.show()
+
+# Al ver el boxplot de los precios, podemos identificar la gran variacion entre estos
+# mostrando gran distancia entre el maximo y minimo valor.
+print('\nDatos estadisticos del precio de productos\n',df_items_copy['price'].describe(),'\n')
+
 
