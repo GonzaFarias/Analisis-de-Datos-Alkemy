@@ -11,23 +11,23 @@ class FileReader(ABC):
     def read(self, path: str) -> pd.DataFrame:
         pass
 
-class CSVFileReader(FileReader):
+class CSVFileReader(FileReader): # Lector csv
     def read(self, path: str) -> pd.DataFrame:
         return pd.read_csv(path)
 
-class ExcelFileReader(FileReader):
+class ExcelFileReader(FileReader): # Lector excel
     def read(self, path: str) -> pd.DataFrame:
         return pd.read_excel(path)
 
-class JSONFileReader(FileReader):
+class JSONFileReader(FileReader): # Lector json
     def read(self, path: str) -> pd.DataFrame:
         return pd.read_json(path)
 
-class TXTFileReader(FileReader):
+class TXTFileReader(FileReader): # Lector txt
     def read(self, path: str):
         return np.loadtxt(path)      
 
-class FileReaderContext:
+class FileReaderContext: 
     def __init__(self, reader: FileReader):
         self.reader = reader
 
@@ -35,7 +35,7 @@ class FileReaderContext:
         return self.reader.read(path)
 
 # Lectura de datasets
-def read_file(path: str) -> pd.DataFrame:
+def read_file(path: str) -> pd.DataFrame: # Devuelve un dataframe según el tipo de archivo leido
     extension = path.split(".")[-1]
     if extension == "csv":
         reader = CSVFileReader()
@@ -74,7 +74,7 @@ def clean_dataset(df:pd.DataFrame) -> pd.DataFrame:
 df_customers_copy = clean_dataset(df_customers)
 df_items_copy = clean_dataset(df_items)
 df_payments_copy = clean_dataset(df_payments)
-df_orders_copy = clean_dataset(df_orders).sort_values(by='order_approved_at', ascending=False)
+df_orders_copy = clean_dataset(df_orders).sort_values(by='order_approved_at', ascending=False) # Ordenado por fecha de aprobación de la compra
 df_products_copy = clean_dataset(df_products)
 
 # Asignación de indices a los datasets
@@ -99,8 +99,7 @@ dataset_info(df_products_copy)
 # Cantidad total de clientes únicos en el conjunto de datos
 print("\nCantidad de clientes únicos:", df_customers_copy['customer_unique_id'].nunique())
 
-
-# Crear y visualizar boxplot de precios
+# Visualizar boxplot de precios
 plt.boxplot(df_items_copy['price'])
 plt.xlabel('Precio')
 plt.ylabel('Valor')
@@ -113,25 +112,18 @@ print('\nDatos estadisticos del precio de productos\n',df_items_copy['price'].de
 
 gc.collect()
 
-# Cantidad de clientes por estado
+# Visualización cantidad de clientes por estado
 df_customers_copy['customer_state'].hist()
 plt.xlabel('Estado')
 plt.ylabel('Clientes')
 plt.title('Ciudades por cliente')
 plt.show()
 
-# Frecuencia de tipos de pago
+# Visualización frecuencia de tipos de pago
 df_payments_copy['payment_type'].hist()
 plt.xlabel('Tipo de pago')
 plt.ylabel('Cantidad')
 plt.title('Frecuencia tipos de pago')
-plt.show()
-
-# Visualización de estados de ordenes
-df_orders_copy['order_status'].hist()
-plt.xlabel('Estado')
-plt.ylabel('Ordenes')
-plt.title('Estados de las ordenes')
 plt.show()
 
 # Gráfico de dispersión entre precio del producto y valor del flete
@@ -139,10 +131,11 @@ plt.scatter(df_items_copy['price'], df_items_copy['freight_value'])
 plt.xlabel('Precio')
 plt.ylabel('Valor del flete')
 plt.title('Gráfico de dispersión')
-plt.show()
+plt.show() # Se observa que el valor del flete no está relacionado con el costo del producto
 
 # Visualización cantidad de compras por mes
 df_orders_copy['order_approved_at'] = pd.to_datetime(df_orders_copy['order_approved_at'])
+# Las ordenes de compra se ordenan por mes excluyendo las canceladas
 orders_per_month = df_orders_copy[df_orders_copy['order_status'] != 'canceled'].groupby([df_orders_copy['order_approved_at'].dt.to_period('M')]).size()
 orders_per_month.plot(kind='line', marker='o', linestyle='-')
 plt.xlabel('Mes')
