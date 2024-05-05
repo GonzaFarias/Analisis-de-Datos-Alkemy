@@ -23,6 +23,10 @@ class JSONFileReader(FileReader):
     def read(self, path: str) -> pd.DataFrame:
         return pd.read_json(path)
 
+class TXTFileReader(FileReader):
+    def read(self, path: str):
+        return np.loadtxt(path)      
+
 class FileReaderContext:
     def __init__(self, reader: FileReader):
         self.reader = reader
@@ -39,6 +43,8 @@ def read_file(path: str) -> pd.DataFrame:
         reader = ExcelFileReader()
     elif extension == "json":
         reader = JSONFileReader()
+    elif extension == 'txt':
+        reader = TXTFileReader()    
     else:
         raise ValueError("Extension no soportada")
     context = FileReaderContext(reader)
@@ -68,10 +74,17 @@ def clean_dataset(df:pd.DataFrame) -> pd.DataFrame:
 df_customers_copy = clean_dataset(df_customers)
 df_items_copy = clean_dataset(df_items)
 df_payments_copy = clean_dataset(df_payments)
-df_orders_copy = clean_dataset(df_orders).sort_values(by='order_purchase_timestamp', ascending=False)
+df_orders_copy = clean_dataset(df_orders).sort_values(by='order_approved_at', ascending=False)
 df_products_copy = clean_dataset(df_products)
 
-# Obtener información de cada conjunto de datos 
+# Asignación de indices a los datasets
+df_customers_copy.set_index('customer_id', inplace=True, drop=False)
+df_items_copy.set_index(['order_id','order_item_id'], inplace=True, drop=False) 
+df_payments_copy.set_index(['order_id','payment_sequential'], inplace=True, drop=False) 
+df_orders_copy.set_index(['order_id','customer_id'], inplace=True, drop=False) 
+df_products_copy.set_index('product_id', inplace=True, drop=False) 
+
+# Obtener información de cada conjunto de datos  
 def dataset_info(df: pd.DataFrame):
     print(4 * '-------------------------------' + '\nDatos descriptivos:')
     print(f'{df.info()}\n')
@@ -82,6 +95,10 @@ dataset_info(df_items_copy)
 dataset_info(df_payments_copy)
 dataset_info(df_orders_copy)
 dataset_info(df_products_copy)
+
+# Cantidad total de clientes únicos en el conjunto de datos
+print("\nCantidad de clientes únicos:", df_customers_copy['customer_unique_id'].nunique())
+
 
 # Crear y visualizar boxplot de precios
 plt.boxplot(df_items_copy['price'])
@@ -110,6 +127,13 @@ plt.ylabel('Cantidad')
 plt.title('Frecuencia tipos de pago')
 plt.show()
 
+# Visualización de estados de ordenes
+df_orders_copy['order_status'].hist()
+plt.xlabel('Estado')
+plt.ylabel('Ordenes')
+plt.title('Estados de las ordenes')
+plt.show()
+
 # Gráfico de dispersión entre precio del producto y valor del flete
 plt.scatter(df_items_copy['price'], df_items_copy['freight_value'])
 plt.xlabel('Precio')
@@ -117,5 +141,17 @@ plt.ylabel('Valor del flete')
 plt.title('Gráfico de dispersión')
 plt.show()
 
-df_orders_copy.to_excel('Proyecto Final\data\Orders.xlsx', index=False)
+# Visualización cantidad de compras por mes
+df_orders_copy['order_approved_at'] = pd.to_datetime(df_orders_copy['order_approved_at'])
+orders_per_month = df_orders_copy[df_orders_copy['order_status'] != 'canceled'].groupby([df_orders_copy['order_approved_at'].dt.to_period('M')]).size()
+orders_per_month.plot(kind='line', marker='o', linestyle='-')
+plt.xlabel('Mes')
+plt.ylabel('Cantidad de Ventas')
+plt.title('Cantidad de Ventas por Mes')
+plt.xticks(rotation=45)  
+plt.tight_layout() 
+plt.grid(True)  
+plt.show()
 
+# Exportación de datos limpios
+df_orders_copy.to_excel('Proyecto Final\data\datos_limpios.xlsx', index=True)
