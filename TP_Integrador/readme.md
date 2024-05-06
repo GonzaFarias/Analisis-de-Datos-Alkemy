@@ -51,6 +51,7 @@ Este trabajo presenta un análisis de datos realizado sobre un conjunto de datos
 9. **Cantidad de Compras por Mes:**
 
 - Se observó una tendencia de crecimiento en la cantidad de ventas a lo largo del tiempo, llegando a los maximos valores a partir de octubre del año 2017:
+  
   ![Compras por mes](plots/plot6.png "imagen")
 
 ---
