@@ -23,30 +23,30 @@ Este trabajo presenta un análisis de datos realizado sobre un conjunto de datos
 3. **Categoría de Productos Más Vendida:**
 
    - La categoría de productos más vendida fue "cama_mesa_baño", con un valor aproximado de 11500 ventas.
-     [Plot ventas por categoría](plots\plot1.png "Imagen")
+     ![Plot ventas por categoría](plots\plot1.png "Imagen")
 4. **Número Total de Pedidos Realizados:**
 
    - Se registraron un total de 98816 pedidos completados, excluyendo aquellos que fueron cancelados.
 5. **Estadísticas de Precios de Productos:**
 
    - El análisis estadístico de los precios de los productos reveló una variación significativa entre los precios, con un rango que va desde 0.85 hasta 6735
-     [Boxplot de precios](plots\plot2.png "Imagen")
+     ![Boxplot de precios](plots\plot2.png "Imagen")
 6. **Distribución de Clientes por Estado:**
 
    - La mayoría de los clientes se encuentran en los estados de "SP" y "SC", seguidos por "MG".
-     [Clientes por estado](plots\plot3.png "imagen")
+     ![Clientes por estado](plots\plot3.png "imagen")
 7. **Frecuencia de Tipos de Pago:**
 
    - El tipo de pago más frecuente fue "credit_card", seguido por "boleto" y "voucher".
-     [Frecuencia tipos de pago](plots\plot4.png "imagen")
+     ![Frecuencia tipos de pago](plots\plot4.png "imagen")
 8. **Relación entre Precio del Producto y Valor del Flete:**
 
    - No se observó una relación clara entre el precio del producto y el valor del flete, según el gráfico de dispersión generado.
-     [Gráfico de dispersion](plots\plot5.png "imagen")
+     ![Gráfico de dispersion](plots\plot5.png "imagen")
 9. **Cantidad de Compras por Mes:**
 
    - Se observó una tendencia de crecimiento en la cantidad de ventas a lo largo del tiempo, llegando a los maximos valores a partir del año 2018 en octubre.
-     [Compras por mes](plots\plot6.png "imagen")
+     ![Compras por mes](plots\plot6.png "imagen")
 
 ---
 
