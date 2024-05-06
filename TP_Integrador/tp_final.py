@@ -167,6 +167,7 @@ grouped_df_order_products = merged_df_order_products.groupby('product_category_n
 
 # Visualización de la venta por categorías de producto, para identificar
 # cual es la más vendida.
+plt.figure(figsize=(15, 6))
 plt.bar(grouped_df_order_products['product_category_name'], grouped_df_order_products['count'])
 plt.xlabel('Categoría')
 plt.ylabel('Ventas')
@@ -197,6 +198,7 @@ print('\nDatos estadisticos del precio de productos\n',df_items_copy['price'].de
 gc.collect()
 
 # Visualización cantidad de clientes por estado
+plt.figure(figsize=(15, 6))
 df_customers_copy['customer_state'].hist()
 plt.xlabel('Estado')
 plt.ylabel('Clientes')
@@ -234,15 +236,139 @@ plt.grid(True)
 plt.savefig("TP_Integrador\plots\plot6.png")
 plt.show()
 
-# Exportación de datos limpios
+# Reporte descriptivo
+df_report = pd.DataFrame({'total_orders': [total_orders], 'max_selling_category': [max_selling_category],
+'avg_payment_value':[average_payment_value], 'unique_customers': [unique_customers]})
+
+# Exportación de datos limpios (del mismo generado hice una copia llamada datos_limpios_reporte
+# para poder aplicar los formatos personalizados y estilos visuales)
 with pd.ExcelWriter('TP_Integrador\data\clean_data.xlsx') as writer:
     df_customers_copy.to_excel(writer, sheet_name='ecommerce_customers_clean', index=True)
     df_items_copy.to_excel(writer, sheet_name='ecommerce_items_clean', index=True)
     df_payments_copy.to_excel(writer, sheet_name='ecommerce_payments_clean', index=True)
     df_orders_copy[df_orders_copy['order_status'] != 'canceled'].to_excel(writer, sheet_name='ecommerce_orders_clean', index=True)
     df_products_copy.to_excel(writer, sheet_name='ecommerce_products_clean', index=True)
-    
+    df_report.to_excel(writer, sheet_name='descriptive report', index=False)
+
 # Vemos algunos de los calculos que se puedenr realizar con NumPy
 calculos_numpy()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
    
