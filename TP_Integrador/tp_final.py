@@ -172,7 +172,7 @@ plt.xlabel('Categoría')
 plt.ylabel('Ventas')
 plt.title('Ventas por categoría de producto')
 plt.xticks(rotation=90)  
-plt.savefig("Proyecto Final\plots\plot1.png")
+plt.savefig("TP_Integrador\plots\plot1.png")
 plt.show() # Podemos observar como la categoría de productos más vendida es cama_mesa_banho,
 # que serian los productos relacionados con cama, mesa y baños.
 
@@ -189,7 +189,7 @@ plt.boxplot(df_items_copy['price'])
 plt.xlabel('Precio')
 plt.ylabel('Valor')
 plt.title('Boxplot de precio')
-plt.savefig("Proyecto Final\plots\plot2.png")
+plt.savefig("TP_Integrador\plots\plot2.png")
 plt.show() # Al ver el boxplot de los precios, podemos identificar la variacion entre estos
 # mostrando gran distancia entre el maximo y minimo valor.
 print('\nDatos estadisticos del precio de productos\n',df_items_copy['price'].describe(),'\n')
@@ -201,7 +201,7 @@ df_customers_copy['customer_state'].hist()
 plt.xlabel('Estado')
 plt.ylabel('Clientes')
 plt.title('Clientes por estado')
-plt.savefig("Proyecto Final\plots\plot3.png")
+plt.savefig("TP_Integrador\plots\plot3.png")
 plt.show()
 
 # Visualización frecuencia de tipos de pago
@@ -209,7 +209,7 @@ df_payments_copy['payment_type'].hist()
 plt.xlabel('Tipo de pago')
 plt.ylabel('Cantidad')
 plt.title('Frecuencia tipos de pago')
-plt.savefig("Proyecto Final\plots\plot4.png")
+plt.savefig("TP_Integrador\plots\plot4.png")
 plt.show()
 
 # Gráfico de dispersión entre precio del producto y valor del flete
@@ -217,7 +217,7 @@ plt.scatter(df_items_copy['price'], df_items_copy['freight_value'])
 plt.xlabel('Precio')
 plt.ylabel('Valor del flete')
 plt.title('Gráfico de dispersión')
-plt.savefig("Proyecto Final\plots\plot5.png")
+plt.savefig("TP_Integrador\plots\plot5.png")
 plt.show() # Se observa que el valor del flete no está relacionado con el costo del producto
 
 # Visualización cantidad de compras por mes
@@ -231,11 +231,11 @@ plt.title('Cantidad de Ventas por Mes')
 plt.xticks(rotation=45)  
 plt.tight_layout() 
 plt.grid(True)  
-plt.savefig("Proyecto Final\plots\plot6.png")
+plt.savefig("TP_Integrador\plots\plot6.png")
 plt.show()
 
 # Exportación de datos limpios
-with pd.ExcelWriter('Proyecto Final\data\clean_data.xlsx') as writer:
+with pd.ExcelWriter('TP_Integrador\data\clean_data.xlsx') as writer:
     df_customers_copy.to_excel(writer, sheet_name='ecommerce_customers_clean', index=True)
     df_items_copy.to_excel(writer, sheet_name='ecommerce_items_clean', index=True)
     df_payments_copy.to_excel(writer, sheet_name='ecommerce_payments_clean', index=True)

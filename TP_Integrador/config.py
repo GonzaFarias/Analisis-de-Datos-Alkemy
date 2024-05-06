@@ -1,5 +1,5 @@
 class Config:
-    BASE_PATH = 'Proyecto Final/data/'
+    BASE_PATH = 'TP_Integrador/data/'
 
     @staticmethod
     def get_dataset_path(filename):
